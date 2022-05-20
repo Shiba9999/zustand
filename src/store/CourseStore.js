@@ -1,25 +1,11 @@
 import create from "zustand";
-import { devtools, persist } from "zustand/middleware";
-
-const courseDataHook = (set) => ({
+const courseStoreState = (set) => ({
   courses: [],
-  AddCourse: (course) => {
-    set((state) => ({
-      courses: [course, ...state.courses],
-    }));
-  },
-  RemoveCourse: (Courseid) => {
-    set((state) => ({
-        courses:state.courses.filter((c)=>c.id !==Courseid)
-    }));
-  },
+  AddCourse: (courseName) =>
+    set((state) => ({ courses: [courseName, ...state.courses] })),
+  removeCourse:(cId)=> set((state)=>({
+    courses:state.courses.filter((c)=>c.id !== cId)
+  }))
 });
-const CourseStore = create(
-  devtools(
-    persist(courseDataHook, {
-      name: "test",
-    })
-  )
-);
-
+const CourseStore = create(courseStoreState);
 export default CourseStore;
